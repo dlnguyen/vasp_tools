@@ -1,0 +1,20 @@
+ifort -o addvacn.x addvacn.f90
+ifort -o ave-mesh.x ave-mesh.f90
+ifort -o band-procar-p1.x band-procar-p1.f90
+ifort -o bmfit0.x bmfit0.f
+ifort -o bmfit.x bmfit.f exerfc.f mina.f
+ifort -o dos-procar.x dos-procar.f90
+ifort -o neig.x neig.f90
+ifort -o relax-new.x relax-new.f90
+
+# ifort for pc cluster gfortran for pc - cygwin
+# gfortran -o output-poscar.x output-poscar.f
+  ifort  -o output-poscar.x output-poscar.f
+
+chmod +x *.xx
+chmod +x run*
+#chmod +x *.exe
+
+echo '################################'
+echo 'All Fortran Files are Compiled !'
+echo '################################'

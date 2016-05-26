@@ -1,0 +1,40 @@
+#!/bin/sh     
+#
+
+JOB=$1
+HERE=`pwd`
+USER=`whoami`
+JOBID=$$
+
+if [ -e $JOB.vasp ] 
+then
+ /bin/rm $JOB.vasp
+fi
+
+
+cat << END_OF_CAT > $JOB.vasp
+#BSUB -J ${JOB}
+#BSUB -e ${JOB}.err
+#BSUB -o ${JOB}.stderr
+#BSUB -q serial
+#BSUB -n 1
+
+source /pkg/chem/vasp/bin/setvasp
+
+echo "Your VASP job starts at  \`date\` "
+
+/pkg/chem/vasp/bin/vasp
+
+wait
+
+
+echo "Your VASP job completed at  \`date\` "
+
+
+END_OF_CAT
+
+#
+chmod +x $JOB.vasp
+#
+bsub < $JOB.vasp
+

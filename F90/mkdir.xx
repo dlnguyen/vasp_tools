@@ -1,0 +1,6 @@
+mkdir 0-scf
+mkdir 1-energy-vol-medium
+mkdir 2-energy-vol-high
+mkdir 3-stress
+mkdir 4-dos
+mkdir 5-band

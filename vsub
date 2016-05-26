@@ -1,0 +1,45 @@
+#!/bin/sh     
+#
+
+JOB=$1
+HERE=`pwd`
+USER=`whoami`
+JOBID=$$
+
+if [ -e $JOB.vasp ] 
+then
+ /bin/rm $JOB.vasp
+fi
+
+
+cat << END_OF_CAT > $JOB.vasp
+#BSUB -a intelmpi
+#BSUB -J ${JOB}
+#BSUB -e ${JOB}.err
+#BSUB -o ${JOB}.stderr
+#BSUB -R 'span[ptile=8]'
+#BSUB -q test
+#BSUB -n 8
+#BSUB -R "ipathavail==0"
+
+
+module purge
+module load compiler/intel/2016  mpi/intel/impi/5.1.3.210
+
+echo "Your VASP job starts at  \`date\` "
+
+mpiexec.hydra -env I_MPI_FABRICS shm   vasp
+
+wait
+
+
+echo "Your VASP job completed at  \`date\` "
+
+
+END_OF_CAT
+
+#
+chmod +x $JOB.vasp
+#
+bsub < $JOB.vasp
+

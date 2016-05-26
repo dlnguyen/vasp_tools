@@ -1,0 +1,10 @@
+System = fcc Au
+PREC = high
+RWIGS = 1.503
+ISIF = 3
+IBRION = 2
+NSW = 50
+NGX = 18
+NGY = 18
+NGZ = 18
+EDIFF = 0.0001

@@ -1,0 +1,6 @@
+# f77 -o bmfit.x bmfit.f mina.f exerfc.f
+#  cp bmfit-$1.dat bmfit.dat
+  bmfit.x <bmfit.dat >bmfit.out
+  mv bmfit.out bmfit-$1.out
+  mv curve.dat curve-$1.dat
+  mv point.dat point-$1.dat

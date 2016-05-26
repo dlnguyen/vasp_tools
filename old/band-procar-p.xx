@@ -1,0 +1,4 @@
+band-procar-p1.x
+test -e band-p.dat && mv band-p.dat band-$1-p.dat
+test -e band-p-up && mv band-p-up.dat band-$1-p-up.dat
+test -e band-p-dn && mv band-p-dn.dat band-$1-p-dn.dat

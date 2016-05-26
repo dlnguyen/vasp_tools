@@ -1,0 +1,32 @@
+date > SUM
+for a in 2.15 2.20 2.30 2.35 2.40 2.45 2.50 2.55 2.60 2.65 2.70 
+
+do
+
+mkdir $a
+cp POTCAR INCAR KPOINTS  $a
+
+cd $a
+ 
+echo "a= $a"
+
+cat >POSCAR <<!
+XXXXXX Bulk
+ $a
+   -0.5  0.5  0.5
+    0.5 -0.5  0.5
+    0.5  0.5 -0.5
+ XX
+ 1
+direct
+ 0.0 0.0 0.0
+!
+
+vasp
+wait
+
+E=`tail -1 OSZICAR`
+echo $a $E >> ../SUM
+
+cd ..
+done

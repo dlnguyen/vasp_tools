@@ -1,0 +1,3 @@
+module load compiler/intel/12.1 
+export PATH=/pkg/chem/vasp/bin:$PATH
+source /pkg/chem/xcrysden/setxcrysden

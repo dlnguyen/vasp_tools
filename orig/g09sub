@@ -1,0 +1,47 @@
+#!/bin/sh 
+#
+if [ "$#" -ne 1 ]
+then
+    echo "You have to assign a input file !!"
+    echo "<< Job not submitted !! >>"
+    exit
+fi
+
+JOB=$1
+HERE=`pwd`
+USER=`whoami`
+JOBDIR=/work/$USER/$JOB.$$
+
+if [ -f ${JOB}.cmd ]
+then
+    /bin/rm ${JOB}.cmd
+fi
+
+
+cat << END_OF_CAT > ${JOB}.cmd
+#!/bin/sh
+#BSUB -J ${JOB}
+#BSUB -e ${JOB}.err
+#BSUB -o ${JOB}.stderr
+#BSUB -q test
+#BSUB -n 1
+cd $HERE
+source /pkg/chem/gaussian/setg09
+export GAUSS_SCRDIR=$JOBDIR
+export KMP_AFFINITY="none"
+export KMP_STACKSIZE="128000000"
+mkdir -p \$GAUSS_SCRDIR
+ulimit -s unlimited
+
+if [ "$large" = "yes" ]
+then
+  export  MKL_DEBUG_CPU_TYPE=2
+fi
+time \$g09root/g09/g09 < ${JOB}.com >& ${JOB}.out
+
+END_OF_CAT
+
+#
+chmod +x ${JOB}.cmd
+#
+bsub < ${JOB}.cmd
